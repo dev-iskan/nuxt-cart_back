@@ -20,4 +20,8 @@ class Product extends Model
     public function scopeWithScopes (Builder $builder, $scopes = []) {
         return (new Scoper(request()))->apply($builder, $scopes);
     }
+
+    public function variations () {
+        return $this->hasMany(ProductVariation::class)->orderBy('order');
+    }
 }

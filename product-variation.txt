@@ -1,0 +1,14 @@
+nike air max blue
+    sizes
+        uk 16
+        uk 18
+
+nike air max
+    colors
+        blue
+        black
+    sizes
+        uk 16
+        uk 19
+
+When we add to cart we add exactly variation of product!
