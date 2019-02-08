@@ -15,7 +15,7 @@ class Scoper {
     }
 
     public function apply(Builder $builder, array $scopes) {
-        foreach ($scopes as $key  => $scope) {
+        foreach ($this->limitScopes($scopes) as $key  => $scope) {
             if (!$scope instanceof Scope) {
                 continue;
             }
@@ -23,5 +23,15 @@ class Scoper {
         }
 
         return $builder;
+    }
+
+    protected function limitScopes(array $scopes) {
+        //  pluck only thus keys which exits in request
+        // if not skip it
+        // if we have category then scope it, else skip and return builder
+        return array_only(
+            $scopes,
+            array_keys($this->request->all())
+        );
     }
 }
