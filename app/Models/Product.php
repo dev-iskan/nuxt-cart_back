@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Models\Traits\CanBeScoped;
+use App\Models\Traits\HasPrice;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use CanBeScoped;
+    use CanBeScoped, HasPrice;
     public function getRouteKeyName()
     {
         return 'slug';
