@@ -19,7 +19,7 @@ class ProductVariation extends Model
     }
 
     public function priceVaries() {
-        return $this->price !== $this->product->price->amount();
+        return $this->price->amount() !== $this->product->price->amount();
     }
 
     public function type () {
