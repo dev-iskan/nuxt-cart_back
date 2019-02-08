@@ -6,6 +6,7 @@ use App\Cart\Money;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariation;
+use App\Models\Stock;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -27,7 +28,7 @@ class ProductTest extends TestCase
         $product = factory(Product::class)->create();
 
         $product->categories()->save(
-            factory(Category::class)->create()
+            factory(Category::class)->make()
         );
 
         $this->assertInstanceOf(Category::class,$product->categories->first());
@@ -37,7 +38,7 @@ class ProductTest extends TestCase
         $product = factory(Product::class)->create();
 
         $product->variations()->save(
-            factory(ProductVariation::class)->create()
+            factory(ProductVariation::class)->make()
         );
 
         $this->assertInstanceOf(ProductVariation::class,$product->variations->first());
@@ -55,5 +56,35 @@ class ProductTest extends TestCase
         ]);
 
         $this->assertEquals($product->formatted_price, '£10.00');
+    }
+
+    public function test_it_can_check_it_is_in_stock () {
+        $product = factory(Product::class)->create();
+
+        $product->variations()->save(
+            $variation = factory(ProductVariation::class)->make()
+        );
+
+        $variation->stocks()->save(
+            factory(Stock::class)->make()
+        );
+
+        $this->assertTrue($product->inStock());
+    }
+
+    public function test_it_can_get_the_stock_count () {
+        $product = factory(Product::class)->create();
+
+        $product->variations()->save(
+            $variation = factory(ProductVariation::class)->make()
+        );
+
+        $variation->stocks()->save(
+            factory(Stock::class)->make([
+                'quantity' => $quantity = 5
+            ])
+        );
+
+        $this->assertEquals($product->stockCount(), $quantity);
     }
 }

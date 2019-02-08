@@ -21,4 +21,14 @@ class Product extends Model
     public function variations () {
         return $this->hasMany(ProductVariation::class)->orderBy('order');
     }
+
+    public function stockCount () {
+        return $this->variations->sum(function ($variation) {
+            return $variation->stockCount();
+        });
+    }
+
+    public function inStock () {
+        return $this->stockCount() > 0;
+    }
 }
