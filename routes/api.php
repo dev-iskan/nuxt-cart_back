@@ -18,3 +18,9 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/login', 'LoginController@action');
     Route::get('/me', 'MeController@action');
 });
+
+Route::resource('/cart', 'Cart\CartController', [
+        'parameters' => [
+            'cart' => 'productVariation'
+        ]
+    ]);

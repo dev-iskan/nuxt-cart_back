@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Cart\Cart;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //register one singleton for whole application for cart
+        $this->app->singleton(Cart::class, function ($app) {
+            return new Cart($app->auth->user());
+        });
     }
 }
