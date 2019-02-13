@@ -52,6 +52,7 @@ class Cart {
     }
 
     public function sync () {
+
         $this->user->cart->each(function ($product) {
             //min quantity
             $quantity = $product->minStock($product->pivot->quantity);
