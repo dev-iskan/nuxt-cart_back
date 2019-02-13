@@ -3,6 +3,7 @@
 namespace Tests\Unit\Cart;
 
 use App\Cart\Cart;
+use App\Cart\Money;
 use App\Models\ProductVariation;
 use App\Models\User;
 use Tests\TestCase;
@@ -100,5 +101,46 @@ class CartTest extends TestCase
         $cart->empty();
 
         $this->assertCount(0, $user->fresh()->cart);
+    }
+
+    public function test_it_can_check_cart_is_empty()
+    {
+        $cart = new Cart(
+            $user = factory(User::class)->create()
+        );
+
+        $user->cart()->attach(
+            $product = factory(ProductVariation::class)->create(), [
+                'quantity' => 0
+            ]
+        );
+
+        $this->assertTrue($cart->isEmpty());
+    }
+
+    public function test_it_returns_money_for_subtotal()
+    {
+        $cart = new Cart(
+            $user = factory(User::class)->create()
+        );
+
+        $user->cart()->attach(
+            $product = factory(ProductVariation::class)->create([
+                'price' => 1000
+            ]), [
+                'quantity' => 2
+            ]
+        );
+
+        $this->assertEquals($cart->subtotal()->amount(), 2000);
+    }
+
+    public function test_it_returns_money_for_total()
+    {
+        $cart = new Cart(
+            $user = factory(User::class)->create()
+        );
+
+        $this->assertInstanceOf(Money::class, $cart->subtotal());
     }
 }

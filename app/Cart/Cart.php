@@ -33,6 +33,23 @@ class Cart {
         $this->user->cart()->detach();
     }
 
+    public function isEmpty () {
+        return $this->user->cart->sum('pivot.quantity') === 0;
+    }
+
+    public function subtotal () {
+        $subtotal = $this->user->cart->sum(function ($product) {
+            return $product->price->amount() * $product->pivot->quantity;
+        });
+
+        return new Money($subtotal);
+    }
+
+    public function total () {
+        //add more things
+        return $this->subtotal();
+    }
+
     protected function getStorePayload($products) {
         //create collection by key as id using keyBy method
         return collect($products)->keyBy('id')->map(function ($product) {
