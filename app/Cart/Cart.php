@@ -6,6 +6,7 @@ use App\Models\User;
 
 class Cart {
     protected $user;
+    protected $changed = false;
 
     public function __construct(User $user)
     {
@@ -48,6 +49,23 @@ class Cart {
     public function total () {
         //add more things
         return $this->subtotal();
+    }
+
+    public function sync () {
+        $this->user->cart->each(function ($product) {
+            //min quantity
+            $quantity = $product->minStock($product->pivot->quantity);
+
+            $this->changed = $quantity != $product->pivot->quantity;
+
+            $product->pivot->update([
+                'quantity' => $quantity
+            ]);
+        });
+    }
+
+    public function hasChanged () {
+        return $this->changed;
     }
 
     protected function getStorePayload($products) {
