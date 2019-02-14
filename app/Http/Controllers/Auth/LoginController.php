@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
-    public function action (LoginRequest $request) {
+    public function __invoke (LoginRequest $request) {
         if (!$token = auth()->attempt($request->only('email', 'password') )) {
             return response()->json([
                 'errors' => [

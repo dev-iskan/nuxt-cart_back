@@ -13,7 +13,7 @@ class MeController extends Controller
         $this->middleware(['auth:api']);
     }
 
-    public function action (Request $request) {
+    public function __invoke (Request $request) {
         return new PrivateUserResource($request->user());
     }
 }
