@@ -15,7 +15,7 @@ Route::resource('/products', 'Products\ProductController');
 Route::resource('/addresses', 'Addresses\AddressController');
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
-    Route::post('/register', 'RegisterController@action');
+    Route::post('/register', 'RegisterController');
     // in the bellow routes we invoke magic method which will call only one method inside these controllers
     Route::post('/login', 'LoginController');
     Route::get('/me', 'MeController');
