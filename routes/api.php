@@ -13,6 +13,7 @@
 Route::resource('/categories', 'Categories\CategoryController');
 Route::resource('/products', 'Products\ProductController');
 Route::resource('/addresses', 'Addresses\AddressController');
+Route::resource('/countries', 'Countries\CountryController');
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('/register', 'RegisterController');

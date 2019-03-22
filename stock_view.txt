@@ -28,3 +28,8 @@ CREATE VIEW product_variation_stock_view AS
 
 
 this is SQL code for  creating view of getting current information about stock in real time
+
+
+
+
+phpunit --filter name_of_test   -  testing isolation
