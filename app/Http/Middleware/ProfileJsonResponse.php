@@ -20,7 +20,7 @@ class ProfileJsonResponse
 
         if ($response instanceof JsonResponse && app('debugbar')->isEnabled() && $request->has('_debug')) {
             $response->setData($response->getData(true) + [
-                '_debugbar' => array_only(app('debugbar')->getData(),'queries')
+                '_debugbar' => array_only(app('debugbar')->getData(), 'queries')
                 ]);
         }
 

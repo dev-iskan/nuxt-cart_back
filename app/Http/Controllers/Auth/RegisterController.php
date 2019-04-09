@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 
 class RegisterController extends Controller
 {
-    public function __invoke (RegisterFormRequest $request) {
+    public function __invoke(RegisterFormRequest $request)
+    {
         $user = User::create($request->only('name', 'email', 'password'));
 
         return new PrivateUserResource($user);

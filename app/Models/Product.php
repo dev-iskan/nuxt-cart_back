@@ -14,21 +14,25 @@ class Product extends Model
         return 'slug';
     }
 
-    public function categories () {
+    public function categories()
+    {
         return $this->belongsToMany(Category::class);
     }
 
-    public function variations () {
+    public function variations()
+    {
         return $this->hasMany(ProductVariation::class)->orderBy('order');
     }
 
-    public function stockCount () {
+    public function stockCount()
+    {
         return $this->variations->sum(function ($variation) {
             return $variation->stockCount();
         });
     }
 
-    public function inStock () {
+    public function inStock()
+    {
         return $this->stockCount() > 0;
     }
 }

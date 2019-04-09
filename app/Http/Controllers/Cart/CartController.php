@@ -17,7 +17,8 @@ class CartController extends Controller
         $this->middleware(['auth:api']);
     }
 
-    public function index (Request $request, Cart $cart) {
+    public function index(Request $request, Cart $cart)
+    {
         $cart->sync();
 
         $request->user()->load(['cart.product', 'cart.product.variations.stock', 'cart.stock', 'cart.type']);
@@ -26,19 +27,23 @@ class CartController extends Controller
         ]);
     }
 
-    public function store (CartStoreRequest $request, Cart $cart) {
+    public function store(CartStoreRequest $request, Cart $cart)
+    {
         $cart->add($request->products);
     }
 
-    public function update (ProductVariation $productVariation,  CartUpdateRequest $request, Cart $cart) {
+    public function update(ProductVariation $productVariation, CartUpdateRequest $request, Cart $cart)
+    {
         $cart->update($productVariation->id, $request->quantity);
     }
 
-    public function destroy (ProductVariation $productVariation,  Cart $cart) {
+    public function destroy(ProductVariation $productVariation, Cart $cart)
+    {
         $cart->delete($productVariation->id);
     }
 
-    protected function meta (Cart $cart) {
+    protected function meta(Cart $cart)
+    {
         return [
             'empty' => $cart->isEmpty(),
             'subtotal' => $cart->subtotal()->formatted(),

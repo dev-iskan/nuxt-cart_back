@@ -15,15 +15,18 @@ class Address extends Model
         'default'
     ];
 
-    public function user () {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function setDefaultAttribute ($value) {
+    public function setDefaultAttribute($value)
+    {
         $this->attributes['default'] = ($value === 'true' || $value ? true : false);
     }
 
-    public function country () {
+    public function country()
+    {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
 

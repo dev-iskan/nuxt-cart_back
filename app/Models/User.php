@@ -20,7 +20,8 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password',
     ];
 
-    public static function boot () {
+    public static function boot()
+    {
         parent::boot();
 
         static::creating(function ($user) {
@@ -33,7 +34,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->id;
     }
 
@@ -42,7 +44,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims()
+    {
         return [];
     }
 
@@ -55,12 +58,14 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    public function cart() {
+    public function cart()
+    {
         // products or variations which are currently in user's cart
         return $this->belongsToMany(ProductVariation::class, 'cart_user')->withPivot('quantity')->withTimestamps();
     }
 
-    public function addresses () {
+    public function addresses()
+    {
         return $this->hasMany(Address::class);
     }
 }

@@ -10,7 +10,8 @@ class ProductVariation extends Model
 {
     use HasPrice;
 
-    public function getPriceAttribute ($value) {
+    public function getPriceAttribute($value)
+    {
         if ($value === null) {
             return $this->product->price;
         }
@@ -18,21 +19,25 @@ class ProductVariation extends Model
         return new Money($value);
     }
 
-    public function priceVaries() {
+    public function priceVaries()
+    {
         return $this->price->amount() !== $this->product->price->amount();
     }
 
-    public function type () {
+    public function type()
+    {
         return $this->hasOne(ProductVariationType::class, 'id', 'product_variation_type_id');
     }
 
-    public function stocks () {
+    public function stocks()
+    {
         return $this->hasMany(Stock::class, 'product_variation_id', 'id');
     }
 
     // this relationship is required to get info from view, but we need not all information but only pivot info
     // thus we use belongsToMany, and actually we don't require ProductVariation itself
-    public function stock () {
+    public function stock()
+    {
         return $this->belongsToMany(
             ProductVariation::class,
             'product_variation_stock_view'
@@ -42,16 +47,19 @@ class ProductVariation extends Model
         ]);
     }
 
-    public function inStock () {
+    public function inStock()
+    {
         return (bool) $this->stock->first()->pivot->in_stock;
 //        return $this->stockCount() > 0;
     }
 
-    public function minStock ($amount) {
+    public function minStock($amount)
+    {
         return min($this->stockCount(), $amount);
     }
 
-    public function stockCount () {
+    public function stockCount()
+    {
         return  $this->stock->sum('pivot.stock');
     }
 
@@ -60,7 +68,8 @@ class ProductVariation extends Model
 //        return $this->belongsTo(ProductVariationType::class, 'product_variation_type_id', 'id');
 //    }
 
-    public function product () {
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }

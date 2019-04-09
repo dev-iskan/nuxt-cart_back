@@ -16,14 +16,15 @@ class CartProductVariationResource extends ProductVariationResource
      */
     public function toArray($request)
     {
-        return array_merge(parent::toArray($request),  [
+        return array_merge(parent::toArray($request), [
             'product' => new ProductIndexResource($this->product),
             'quantity' => $this->pivot->quantity,
             'total' => $this->getTotalFormatted()
         ]);
     }
 
-    protected function getTotalFormatted () {
+    protected function getTotalFormatted()
+    {
         $total = new  Money($this->pivot->quantity *  $this->price->amount());
         return $total->formatted();
     }

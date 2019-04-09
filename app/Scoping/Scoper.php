@@ -6,7 +6,8 @@ use App\Scoping\Contracts\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class Scoper {
+class Scoper
+{
     protected $request;
 
     public function __construct(Request $request)
@@ -14,7 +15,8 @@ class Scoper {
         $this->request = $request;
     }
 
-    public function apply(Builder $builder, array $scopes) {
+    public function apply(Builder $builder, array $scopes)
+    {
         foreach ($this->limitScopes($scopes) as $key  => $scope) {
             if (!$scope instanceof Scope) {
                 continue;
@@ -25,7 +27,8 @@ class Scoper {
         return $builder;
     }
 
-    protected function limitScopes(array $scopes) {
+    protected function limitScopes(array $scopes)
+    {
         //  pluck only thus keys which exits in request
         // if not skip it
         // if we have category then scope it, else skip and return builder
